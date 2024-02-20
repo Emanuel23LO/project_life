@@ -13,7 +13,7 @@ class PaymentForm(forms.ModelForm):
             'payment_method': 'Metodo de pago',
             'date': 'Fecha ',
             'value': 'valor',   
-            'booking.id': 'cliente' 
+            'booking': 'Reserva' 
         }
         widgets = {
             'payment_method': forms.TextInput(attrs={'placeholder': 'Ingresa metodo de pago'}),      

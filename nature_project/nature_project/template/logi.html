@@ -5,11 +5,11 @@
   </head>
   <body>
     {% if session %}
-    <h1>Welcome {{session.userinfo.name}}!</h1>
+    <h1>ole {{session.userinfo.name}}!</h1>
     <p><a href="{% url 'logout' %}">Logout</a></p>
     <div><pre>{{pretty}}</pre></div>
     {% else %}
-    <h1>Welcome Guest</h1>
+    <h1>hola</h1>
     <p><a href="{% url 'login' %}">Login</a></p>
     {% endif %}
   </body>
