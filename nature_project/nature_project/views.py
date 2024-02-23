@@ -9,6 +9,8 @@ from urllib.parse import quote_plus, urlencode
 def index(request):
     return render(request, 'index.html')
 
+def landing(request):
+    return render(request, 'landing.html')
 
 
 
