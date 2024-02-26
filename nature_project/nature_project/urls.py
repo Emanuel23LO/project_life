@@ -31,7 +31,7 @@ urlpatterns = [
     # path('booking_services/', include('booking_services.urls')),
     # path('booking_cabins/', include('booking_cabins.urls')),
     path('', views.logi, name='logi'),    
-    path('login', views.login, name='login'),
+    path('login/', views.login, name='login'),
     path("logout", views.logout, name="logout"),
     path("callback", views.callback, name="callback"),
 ]
