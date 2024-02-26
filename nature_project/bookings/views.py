@@ -70,6 +70,7 @@ def detail_booking(request, booking_id):
     return render(request, 'bookings/detail.html', {'booking': booking, 'booking_cabins': booking_cabins, 'booking_services': booking_services, 'payments': payments})
 
 
+
 def delete_booking(request, booking_id):
     booking = Booking.objects.get(pk=booking_id)
     try:
@@ -78,3 +79,34 @@ def delete_booking(request, booking_id):
     except:
         messages.error(request, 'No se puede eliminar la reserva porque está asociado a otra tabla.')
     return redirect('bookings')
+
+def edit_booking(request, booking_id):
+    booking = Booking.objects.get(pk=booking_id)
+    customers_list = Customer.objects.all()  # Obtener la lista de clientes
+    cabins_list = Cabin.objects.all()  # Obtener la lista de cabañas
+    services_list = Service.objects.all()  # Obtener la lista de servicios
+
+    if request.method == 'POST':
+        # Actualizar los campos de la reserva con los datos enviados en la solicitud POST
+        try:
+            date_start_str = request.POST['date_start']
+            date_end_str = request.POST['date_end']        
+            date_start = datetime.strptime(date_start_str, '%Y-%m-%d')
+            date_end = datetime.strptime(date_end_str, '%Y-%m-%d')
+            
+            booking.date_start = date_start
+            booking.date_end = date_end
+            booking.value = request.POST['totalValue']
+            booking.status = 'Reservado'  # Siempre lo establecemos a 'Reservado' en esta vista
+            
+            # Guardar los cambios en la reserva
+            booking.save()
+            
+            messages.success(request, 'Reserva actualizada correctamente.')  # Mensaje de éxito
+            return redirect('bookings')  # Redirigir a la página de listado de reservas después de la actualización
+        except Exception as e:
+            messages.error(request, f'Ocurrió un error al editar la reserva: {e}')  # Mensaje de error
+            return redirect('edit_booking', booking_id=booking_id)
+        
+    # Si la solicitud no es POST, renderiza la página de edición con los datos de la reserva
+    return render(request, 'bookings/create.html', {'booking': booking, 'customers_list': customers_list, 'cabins_list': cabins_list, 'services_list': services_list})

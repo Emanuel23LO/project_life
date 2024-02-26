@@ -23,7 +23,7 @@
                         <th>Metodo de pago</th>
                         <th>Fecha</th>
                         <th>Valor</th>
-                        <th>Id reserva</th>
+                        <th>reserva</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -34,7 +34,7 @@
                         <td>{{ payment.payment_method }}</td> 
                         <td>{{ payment.date}}</td>
                         <td>{{ payment.value}}</td>  
-                        <td>{{ payment.booking}}</td>     
+                        <td>{{ payment.booking.id }}</td>    
                     <td>
                         <form action="{% url 'payment_status' payment.id %}" method="POST">
                             {% csrf_token %}                            
