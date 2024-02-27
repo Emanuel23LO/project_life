@@ -9,8 +9,7 @@ from urllib.parse import quote_plus, urlencode
 def index(request):
     return render(request, 'index.html')
 
-def landing(request):
-    return render(request, 'landing.html')
+
 
 
 
@@ -50,10 +49,10 @@ def logout(request):
         ),
     )
 
-def logi(request):
+def landing(request):
     return render(
         request,
-        "logi.html",
+        "landing.html",
         context={
             "session": request.session.get("user"),
             "pretty": json.dumps(request.session.get("user"), indent=4),
