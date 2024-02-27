@@ -9,5 +9,5 @@ class Booking(models.Model):
     status = models.CharField(max_length=30, default='Reservado')
     customer = models.ForeignKey('customers.Customer', on_delete=models.CASCADE)
 
-def __str__(self):
-    return self.value
+    def __str__(self):
+        return str(self.value)

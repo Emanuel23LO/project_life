@@ -24,7 +24,7 @@ def status_reservation(sender, instance, created, **kwargs):
         texto= 'reservado'
 
     Booking.objects.filter(id=instance.booking_id).update(status=texto)
-
+    
 def payments(request):    
     payments_list = Payment.objects.all()    
     return render(request, 'payments/index.html', {'payments_list': payments_list})
