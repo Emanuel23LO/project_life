@@ -18,7 +18,11 @@ def change_status_cabin_type(request, cabin_type_id):
 def create_cabin_type(request):
     form = Cabin_typeForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        try:
+            form.save()
+            messages.success(request, 'Tipo de cabaña creado correctamente.')
+        except:
+            messages.error(request, 'Ocurrió un error al crear un tipo de cabaña.')  
         return redirect('cabin_types')    
     return render(request, 'cabin_types/create.html', {'form': form})
 

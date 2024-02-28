@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
 
 # Create your views here.
 from datetime import datetime
@@ -20,7 +22,8 @@ def bookings(request):
 def create_booking(request):
     customers_list = Customer.objects.all()
     cabins_list = Cabin.objects.all()
-    services_list = Service.objects.all()    
+    services_list = Service.objects.all()   
+    booking = Booking() 
     
     if request.method == 'POST':
         date_start_str = request.POST['date_start']
@@ -32,7 +35,7 @@ def create_booking(request):
             date_start=date_start,
             date_end=date_end,
             value=request.POST['totalValue'],
-            status='Reservado',
+            status= booking.reserved,
             customer_id=request.POST['customer']
         )
         booking.save()        
@@ -68,6 +71,29 @@ def detail_booking(request, booking_id):
     booking_services = Booking_service.objects.filter(booking=booking)
     payments = Payment.objects.filter(booking=booking)
     return render(request, 'bookings/detail.html', {'booking': booking, 'booking_cabins': booking_cabins, 'booking_services': booking_services, 'payments': payments})
+
+
+
+
+
+
+def status_reservation(request, booking_id):
+    booking = Booking.objects.get(pk=booking_id)
+    payment = Payment.objects.filter(booking=booking).first()
+
+    
+    if payment.value == 0.5 * booking.value:
+        estado = booking.reserved
+    elif payment.value == booking.value:
+            estado = booking.running
+    else:
+        estado = 'esta mal el codigo'
+
+    return render(request, 'bookings/index.html', {'estado': estado})
+    
+
+
+
 
 
 

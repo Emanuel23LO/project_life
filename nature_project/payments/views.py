@@ -3,27 +3,24 @@ from payments.models import Payment
 from django.http import JsonResponse
 from django.contrib import messages
 from .forms import PaymentForm
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from bookings.models import Booking
 
 
 
 
-@receiver(post_save, sender=Payment)
-def status_reservation(sender, instance, created, **kwargs):
-    booking = Booking.objects.get(pk=instance.booking_id)
-    valor_reserva = booking.value
-    if instance.value > 0.5 * valor_reserva:
-        texto = 'pagado'
-    elif instance.value >= 0.5:
-        texto = 'confirmado'
-    elif instance.value <= 0:
-        texto = 'cancelado'
-    else:
-        texto= 'reservado'
+def status_payment(request, booking_id):
+    booking = Booking.objects.get(pk=booking_id)
+    payment = Payment.objects.filter(booking=booking).first()
 
-    Booking.objects.filter(id=instance.booking_id).update(status=texto)
+    
+    if payment.value >= 0.5 * booking.value:
+        estado = booking.reserved
+    elif payment.value == booking.value:
+            estado = booking.running
+    else:
+        estado = 'esta mal el codigo'
+
+    return render(request, 'payment/index.html', {'estado': estado})
     
 def payments(request):    
     payments_list = Payment.objects.all()    

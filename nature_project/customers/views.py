@@ -24,9 +24,9 @@ def create_customer(request):
     if form.is_valid() and request.method == 'POST':
         try:
             form.save()
-            messages.success(request, 'Autor creado correctamente.')
+            messages.success(request, 'Cliente creado correctamente.')
         except:
-            messages.error(request, 'Ocurrió un error al crear el autor.')        
+            messages.error(request, 'Ocurrió un error al crear el cliente.')        
         return redirect('customers')    
     return render(request, 'customers/editar.html', {'form': form})
 
@@ -41,7 +41,7 @@ def delete_customer(request, customer_id):
         customer.delete()
         messages.success(request, 'Cliente eliminado correctamente.')
     except:
-        messages.error(request, 'No se puede eliminar el Cliente porque está asociado a un libro.')
+        messages.error(request, 'No se puede eliminar el Cliente porque está asociado a una reserva.')
     return redirect('customers')
 
 def edit_customer(request, customer_id):
@@ -50,8 +50,8 @@ def edit_customer(request, customer_id):
     if form.is_valid() and request.method == 'POST':
         try:
             form.save()
-            messages.success(request, 'Autor actualizado correctamente.')
+            messages.success(request, 'Cliente actualizado correctamente.')
         except:
-            messages.error(request, 'Ocurrió un error al editar el autor.')        
+            messages.error(request, 'Ocurrió un error al editar el Cliente.')        
         return redirect('customers')    
     return render(request, 'customers/editar.html', {'form': form})
