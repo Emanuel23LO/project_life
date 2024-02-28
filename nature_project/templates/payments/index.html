@@ -23,7 +23,7 @@
                         <th>Metodo de pago</th>
                         <th>Fecha</th>
                         <th>Valor</th>
-                        <th>reserva</th>
+                        <th>Reserva</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -34,7 +34,7 @@
                         <td>{{ payment.payment_method }}</td> 
                         <td>{{ payment.date}}</td>
                         <td>{{ payment.value}}</td>  
-                        <td>{{ payment.booking.id }}</td>    
+                        <td>{{ payment.booking}}</td>     
                     <td>
                         <form action="{% url 'payment_status' payment.id %}" method="POST">
                             {% csrf_token %}                            
@@ -49,14 +49,6 @@
                         <a href="" class="btn btn-info btn-circle btn-sm" data-bs-toggle="modal" data-bs-target="#modalId" data-payment-id="{{ payment.id }}">
                             <i class="fas fa-info-circle"></i>
                          </a>
-
-                         <a href="{% url 'edit_payment' payment.id %}" class="btn btn-warning btn-circle btn-sm">
-                            <i class="fas fa-edit"></i>
-                        </a>
-
-                        <a href="{% url 'delete_payment' payment.id %}" class="deleteBtn btn btn-danger btn-circle btn-sm">
-                            <i class="fas fa-trash"></i>
-                        </a>
 
                     </td>
                     </tr>
