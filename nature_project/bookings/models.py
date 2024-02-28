@@ -1,8 +1,8 @@
 from django.db import models
-from django.forms import JSONField
 
-# Create your models here.
-class Booking(models.Model):   
+
+
+class Booking(models.Model):
     date_booking = models.DateTimeField()
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
@@ -26,5 +26,3 @@ class Booking(models.Model):
 
     def __str__(self):
         return str(self.value)
-    
-

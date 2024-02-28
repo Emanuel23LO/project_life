@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect
 from payments.models import Payment
 from django.http import JsonResponse
 from django.contrib import messages
+
+
+
 from .forms import PaymentForm
+<<<<<<< HEAD
 from bookings.models import Booking
 
 
@@ -22,6 +26,8 @@ def status_payment(request, booking_id):
 
     return render(request, 'payment/index.html', {'estado': estado})
     
+=======
+>>>>>>> e632fb8e57fe49084ad3a68adda6e24f79517c37
 def payments(request):    
     payments_list = Payment.objects.all()    
     return render(request, 'payments/index.html', {'payments_list': payments_list})
@@ -44,20 +50,9 @@ def create_payment(request):
     return render(request, 'payments/create.html', {'form': form})
 
 def detail_payment(request, payment_id):
-    try:
-        payment = Payment.objects.get(pk=payment_id)
-        data = {
-            'payment_method': payment.payment_method,
-            'date': payment.date,
-            'value': payment.value,
-        }
-        return JsonResponse(data)
-    except Payment.DoesNotExist:
-        messages.error(request, 'El pago especificado no existe.')
-        return JsonResponse({'error': 'Payment not found'}, status=404)
-    except Exception as e:
-        messages.error(request, f'Ocurrió un error al obtener los detalles del pago: {str(e)}')
-        return JsonResponse({'error': str(e)}, status=500)
+    payment = Payment.objects.get(pk=payment_id)
+    data = { 'payment_method': payment.payment_method, 'date': payment.date, 'value': payment.value }
+    return JsonResponse(data)
 
 def delete_payment(request, payment_id):
     payment = Payment.objects.get(pk=payment_id)
